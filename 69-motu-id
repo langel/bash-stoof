@@ -1,0 +1,3 @@
+#!/bin/bash
+# for ubuntu throw in /etc/update-motd.d/
+hostname | toilet -tk --gay --font bigascii12.tlf
