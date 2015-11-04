@@ -56,7 +56,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-	PS1="\[$(tput bold)\]\[\\033[38;5;124m\]\t \[\\033[38;5;208m\]\u\[\\033[38;5;226m\]@\[\\033[38;5;34m\]\h \[\\033[38;5;27m\]\w \[\\033[38;5;56m\]#%&]})=-\[$(tput sgr0)\]\[\\033[38;5;7m\] "
+	PS1="\[$(tput bold)\]\[\\033[38;5;124m\]\t \[\\033[38;5;208m\]\u\[\\033[38;5;226m\]@\[\\033[38;5;34m\]\h \[\\033[38;5;27m\]\w \[\\033[38;5;56m\]"$'\xf0\x9f\x92\xa1\xe2\x88\x85 '"\[$(tput sgr0)\]\[\\033[38;5;7m\]\[\033[0m\] "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -113,6 +113,10 @@ fi
 
 #set C^-l to clear screen
 bind "\C-l":"clear-screen"
+#uncomment if you use ctrl+a for screen and want ctrl+b for beginning of the line
+#bind "\C-b":"beginning-of-line" 
+#uncomment for vi command mode default
+#set -o vi
 
 #set default editor to vim
 export VISUAL=vim
