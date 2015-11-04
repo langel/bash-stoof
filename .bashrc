@@ -13,8 +13,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=5000
-HISTFILESIZE=10000
+HISTSIZE=1000
+HISTFILESIZE=2000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -37,8 +37,6 @@ case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
 
-export TERM=xterm-256color
-
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
@@ -57,7 +55,7 @@ fi
 
 if [ "$color_prompt" = yes ]; then
 	#PS1="\[$(tput bold)\]\[$(tput setaf 1)\t \[$(tput setaf 3)\]\u\[$(tput setaf 2)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 5)\]\w\[$(tput setaf 1)\[$(tput setaf 7)\n\\$ \[$(tput sgr0)\]"
-	PS1="\[$(tput bold)\]\\033[38;5;124m\t \\033[38;5;208m\u\\033[38;5;226m@\\033[38;5;34m\h \\033[38;5;27m\w \\033[38;5;56m#%&]})=-\[$(tput sgr0)\]\\033[38;5;7m "
+	PS1="\[$(tput bold)\]\[\\033[38;5;124m\]\t \[\\033[38;5;208m\]\u\[\\033[38;5;226m\]@\[\\033[38;5;34m\]\h \[\\033[38;5;27m\]\w \[\\033[38;5;56m\]#%&]})=-\[$(tput sgr0)\]\[\\033[38;5;7m\] "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -109,12 +107,3 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
-
-
-
-#set C^-l to clear screen
-bind "\C-l":"clear-screen"
-
-#set default editor to vim
-export VISUAL=vim
-export EDITOR=$VISUAL
