@@ -56,8 +56,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-	#PS1="\[$(tput bold)\]\[$(tput setaf 1)\t \[$(tput setaf 3)\]\u\[$(tput setaf 2)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 5)\]\w\[$(tput setaf 1)\[$(tput setaf 7)\n\\$ \[$(tput sgr0)\]"
-	PS1="\[$(tput bold)\]\\033[38;5;124m\t \\033[38;5;208m\u\\033[38;5;226m@\\033[38;5;34m\h \\033[38;5;27m\w \\033[38;5;56m#%&]})=-\[$(tput sgr0)\]\\033[38;5;7m "
+	PS1="\[$(tput bold)\]\[\\033[38;5;124m\]\t \[\\033[38;5;208m\]\u\[\\033[38;5;226m\]@\[\\033[38;5;34m\]\h \[\\033[38;5;27m\]\w \[\\033[38;5;56m\]#%&]})=-\[$(tput sgr0)\]\[\\033[38;5;7m\] "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
