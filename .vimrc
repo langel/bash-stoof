@@ -22,8 +22,6 @@ endfunction
 " note that line continuation is only possible without 'C' in 'cpoptions'
 let g:command_line_substitutes = [
 	\ ['^vres ', 'vertical res '],
-	\ ['^ack ', 'Ack! '],
-	\ ['^ee \(.\+\)', 'e **/\1*'],
 	\ ['^h ', 'vertical help '],
 \]
 
