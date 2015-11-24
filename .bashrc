@@ -55,8 +55,30 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+COLOR[0]="\[\\033[38;5;124m\]"
+COLOR[1]="\[\\033[38;5;208m\]"
+COLOR[2]="\[\\033[38;5;226m\]"
+COLOR[3]="\[\\033[38;5;34m\]"
+COLOR[4]="\[\\033[38;5;27m\]"
+COLOR[5]="\[\\033[38;5;56m\]"
+COLOR[6]="\[\\033[38;5;7m\]"
+export PROMPT_COMMAND="bash_stoof;"
+
+bash_stoof() {
+	PS1="\[$(tput bold)\]${COLOR[0]}\t ${COLOR[1]}\u${COLOR[2]}@${COLOR[3]}\h ${COLOR[4]}\w "$'\[\xf0\x9f\x92\]\xa1\[\xe2\x88\]\x85 '"\[$(tput sgr0)\]${COLOR[6]}\[\033[0m\] "
+	COLOR_COUNT=5
+	COLOR_MEM=${COLOR[0]}
+	COLOR_DICK=$(($COLOR_COUNT - 1))
+	for i in `seq 0 $COLOR_DICK` 
+	do
+		INDEX_DICK=$(($i + 1))
+		COLOR[$i]=${COLOR[$INDEX_DICK]}
+	done    
+	COLOR[${COLOR_COUNT}]=$COLOR_MEM
+}
+
 if [ "$color_prompt" = yes ]; then
-	PS1="\[$(tput bold)\]\[\\033[38;5;124m\]\t \[\\033[38;5;208m\]\u\[\\033[38;5;226m\]@\[\\033[38;5;34m\]\h \[\\033[38;5;27m\]\w \[\\033[38;5;56m\]"$'\[\xf0\x9f\x92\]\xa1\[\xe2\x88\]\x85 '"\[$(tput sgr0)\]\[\\033[38;5;7m\]\[\033[0m\] "
+	bash_stoof
 # alternate prompt chars
 # PS1="\[$(tput bold)\]\[\\033[38;5;124m\]\t \[\\033[38;5;208m\]\u\[\\033[38;5;226m\]@\[\\033[38;5;34m\]\h \[\\033[38;5;27m\]\w \[\\033[38;5;56m\]"$'\[\xe2\x88\xb4\[\xe2\x86\x92\]\x0a '"\[$(tput sgr0)\]\[\\033[38;5;7m\]\[\033[0m\] "
 

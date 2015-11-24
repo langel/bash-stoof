@@ -22,4 +22,5 @@
    * tmux w/ screen shortcuts
  * add osx prompt option
  * create bin directory for scripts and add to path in install
+ * all apt-get output piped through toilet -gay -t
 
