@@ -65,7 +65,7 @@ COLOR[6]="\[\\033[38;5;7m\]"
 export PROMPT_COMMAND="bash_stoof;"
 
 bash_stoof() {
-	PS1="\[$(tput bold)\]${COLOR[0]}\t ${COLOR[1]}\u${COLOR[2]}@${COLOR[3]}\h ${COLOR[4]}\w "$'\[\xf0\x9f\x92\]\xa1\[\xe2\x88\]\x85 '"\[$(tput sgr0)\]${COLOR[6]}\[\033[0m\] "
+	PS1="\[$(tput bold)\]${COLOR[0]}\t ${COLOR[1]}\u${COLOR[2]}@${COLOR[3]}\h ${COLOR[4]}\w ${COLOR[5]}"$'\[\xf0\x9f\x92\]\xa1\[\xe2\x88\]\x85 '"\[$(tput sgr0)\]${COLOR[6]}\[\033[0m\] "
 	COLOR_COUNT=5
 	COLOR_MEM=${COLOR[0]}
 	COLOR_DICK=$(($COLOR_COUNT - 1))
