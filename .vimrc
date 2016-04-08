@@ -2,7 +2,9 @@ set tabstop=3
 set shiftwidth=3
 set autoindent
 syntax on
-colorscheme gey
+set background=dark
+let g:solarized_termcolors=256
+colorscheme solarized
 
 function! CommandLineSubstitute()
 	let cl = getcmdline()
