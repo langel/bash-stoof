@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo apt-get install ack-grep
-sudo dpkg-divert --local --divert /usr/bin/ack --rename --add /usr/bin/ack-grep
+sudo ln -s /usr/bin/ack-grep /usr/bin/ack
 sudo apt-get install sl
 sudo apt-get install cowsay
 sudo apt-get install toilet
