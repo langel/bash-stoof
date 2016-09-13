@@ -1,6 +1,7 @@
 set tabstop=3
 set shiftwidth=3
 set autoindent
+set ruler
 syntax on
 set background=dark
 let g:solarized_termcolors=256
