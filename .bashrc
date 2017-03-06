@@ -65,7 +65,9 @@ COLOR[6]="\[\\033[38;5;7m\]"
 export PROMPT_COMMAND="bash_stoof;"
 
 bash_stoof() {
+  # build PS1 rainbow
 	PS1="\[$(tput bold)\]${COLOR[0]}\t ${COLOR[1]}\u${COLOR[2]}@${COLOR[3]}\h ${COLOR[4]}\w ${COLOR[5]}"$'\[\xf0\x9f\x92\]\xa1\[\xe2\x88\]\x85 '"\[$(tput sgr0)\]${COLOR[6]}\[\033[0m\] "
+  # rotate rainbow colors for next line
 	COLOR_COUNT=5
 	COLOR_MEM=${COLOR[0]}
 	COLOR_DICK=$(($COLOR_COUNT - 1))
@@ -75,6 +77,7 @@ bash_stoof() {
 		COLOR[$i]=${COLOR[$INDEX_DICK]}
 	done    
 	COLOR[${COLOR_COUNT}]=$COLOR_MEM
+  # append git info to PS1
 }
 
 if [ "$color_prompt" = yes ]; then

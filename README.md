@@ -1,5 +1,19 @@
 # bash-stoof
 
+.vimrc notes
+* :Fjson command formats json data
+* lanox is default color scheme
+
+.tmux.conf notes
+* `meta-(hjkl)` move across panes
+* `meta-(arrow keys)` resize pane
+* `prefix |` split pane vertically
+* `prefix -` splt pane horizontally
+* `meta-(c or n)` new window
+* `meta-q` kill panel
+* `shift-(left or right)` move through windows
+
+
 * Bootstrap a linux environment
  * modify bashrc
  * install packages

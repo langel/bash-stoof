@@ -5,7 +5,7 @@ set ruler
 syntax on
 set background=dark
 let g:solarized_termcolors=256
-colorscheme solarized
+colorscheme lanox
 
 function! CommandLineSubstitute()
 	let cl = getcmdline()
@@ -33,3 +33,6 @@ let g:command_line_substitutes = [
 " whenever we press `<enter>` on the command line:
 
 cnoremap <enter> <c-\>eCommandLineSubstitute()<enter><enter>
+
+" Let's format some JSON
+command Fjson execute "%!python -m json.tool"
