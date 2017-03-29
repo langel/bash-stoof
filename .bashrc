@@ -55,19 +55,52 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-COLOR[0]="\[\\033[38;5;124m\]"
-COLOR[1]="\[\\033[38;5;208m\]"
-COLOR[2]="\[\\033[38;5;226m\]"
-COLOR[3]="\[\\033[38;5;34m\]"
-COLOR[4]="\[\\033[38;5;27m\]"
-COLOR[5]="\[\\033[38;5;56m\]"
-COLOR[6]="\[\\033[38;5;7m\]"
+# gradient defined
+COLOR[0]="124"
+COLOR[1]="208"
+COLOR[2]="226"
+COLOR[3]="34"
+COLOR[4]="27"
+COLOR[5]="56"
+# black
+COLOR[6]="0"
+
+bg_color() {
+  echo "\[\\033[48;5;${COLOR[$1]}m\]"
+}
+fg_color() {
+  echo "\[\\033[38;5;${COLOR[$1]}m\]"
+}
+
 export PROMPT_COMMAND="bash_stoof;"
 
 bash_stoof() {
-  # build PS1 rainbow
-	PS1="\[$(tput bold)\]${COLOR[0]}\t ${COLOR[1]}\u${COLOR[2]}@${COLOR[3]}\h ${COLOR[4]}\w ${COLOR[5]}"$'\[\xf0\x9f\x92\]\xa1\[\xe2\x88\]\x85 '"\[$(tput sgr0)\]${COLOR[6]}\[\033[0m\] "
-  # rotate rainbow colors for next line
+  # primary prompt display
+  PS1="\[$(tput bold)\]$(fg_color 0)\t $(fg_color 1)\u$(fg_color 2)@$(fg_color 3)\h $(fg_color 4)\w"
+  # add git bar
+  gitstatus=$( LC_ALL=C git status --untracked-files=${__GIT_PROMPT_SHOW_UNTRACKED_FILES:-all} --porcelain --branch 2>&1 )
+  if [ $? -eq 0 ]
+  then
+    while IFS='' read -r line || [[ -n "$line" ]]
+    do
+      status=${line:0:2}
+      while [[ -n $status ]]
+      do
+        #echo ${status}
+        case "$status" in
+          \#\#) branch_line="${line/\.\.\./^}"; break;
+        esac
+        status=${status:0:(${#status}-1)}
+      done
+    done <<< ${gitstatus}
+    #echo -n ${branch_line}
+    IFS="^" read -ra branch_fields <<< "${branch_line/\#\# }"
+    branch="${branch_fields[0]}"
+    #echo ${branch}
+    PS1="${PS1} $(bg_color 5)$(fg_color 6)"$'\[\xe2\x96\]\xb6'" ${branch} \[\033[m\]"
+  fi
+  PS1="${PS1}$(fg_color 5)"$'\[\xf0\x9f\x92\]\xa1\[\xe2\x88\]\x85 \[\xe2\x96\]\xb6'"\[$(tput sgr0)\]\[\033[0m\] "
+  # setup next line colors of rainbow
 	COLOR_COUNT=5
 	COLOR_MEM=${COLOR[0]}
 	COLOR_DICK=$(($COLOR_COUNT - 1))
@@ -77,7 +110,6 @@ bash_stoof() {
 		COLOR[$i]=${COLOR[$INDEX_DICK]}
 	done    
 	COLOR[${COLOR_COUNT}]=$COLOR_MEM
-  # append git info to PS1
 }
 
 if [ "$color_prompt" = yes ]; then
