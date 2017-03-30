@@ -76,11 +76,21 @@ export PROMPT_COMMAND="bash_stoof;"
 
 bash_stoof() {
   # primary prompt display
-  PS1="\[$(tput bold)\]$(fg_color 0)\t $(fg_color 1)\u$(fg_color 2)@$(fg_color 3)\h $(fg_color 4)\w"
+  style_reset="\[\033[0m\]"
+  triangle=$'\[\xe2\x96\]\xb6'
+  illuminull=$'\[\xf0\x9f\x92\]\xa1\[\xe2\x88\]\x85'
+  main_prompt="\[$(tput bold)\]$(fg_color 0)\t $(fg_color 1)\u$(fg_color 2)@$(fg_color 3)\h $(fg_color 4)\w\[$(tput sgr0)\]"
+
   # add git bar
+  gitbar=''
   gitstatus=$( LC_ALL=C git status --untracked-files=${__GIT_PROMPT_SHOW_UNTRACKED_FILES:-all} --porcelain --branch 2>&1 )
   if [ $? -eq 0 ]
   then
+    git_staged=0;
+    git_changed=0;
+    git_conflicts=0;
+    git_untracked=0;
+    git_stats_string='';
     while IFS='' read -r line || [[ -n "$line" ]]
     do
       status=${line:0:2}
@@ -88,7 +98,16 @@ bash_stoof() {
       do
         #echo ${status}
         case "$status" in
-          \#\#) branch_line="${line/\.\.\./^}"; break;
+          \#\#) branch_line="${line/\.\.\./^}"; break;;
+          \?\?) ((git_untracker++)); break;;
+          U?) ((git_conflicts++)); break;;
+          ?U) ((git_conflicts++)); break;;
+          DD) ((git_conflicts++)); break;;
+          AA) ((git_conflicts++)); break;;
+          U) ((git_conflicts++));;
+          ?M) ((git_changed++));;
+          ?D) ((git_changed++));;
+          *) ((git_staged++));;
         esac
         status=${status:0:(${#status}-1)}
       done
@@ -96,10 +115,10 @@ bash_stoof() {
     #echo -n ${branch_line}
     IFS="^" read -ra branch_fields <<< "${branch_line/\#\# }"
     branch="${branch_fields[0]}"
+    gitbar="$(bg_color 5)$(fg_color 6)${triangle} ${branch} ${style_reset} "
     #echo ${branch}
-    PS1="${PS1} $(bg_color 5)$(fg_color 6)"$'\[\xe2\x96\]\xb6'" ${branch} \[\033[m\]"
   fi
-  PS1="${PS1}$(fg_color 5)"$'\[\xf0\x9f\x92\]\xa1\[\xe2\x88\]\x85 \[\xe2\x96\]\xb6'"\[$(tput sgr0)\]\[\033[0m\] "
+  PS1="${gitbar}${main_prompt} $(fg_color 5)${illuminull} ${triangle}${style_reset} "
   # setup next line colors of rainbow
 	COLOR_COUNT=5
 	COLOR_MEM=${COLOR[0]}
