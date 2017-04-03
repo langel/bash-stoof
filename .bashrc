@@ -83,40 +83,52 @@ bash_stoof() {
 
   # add git bar
   gitbar=''
-  gitstatus=$( LC_ALL=C git status --untracked-files=${__GIT_PROMPT_SHOW_UNTRACKED_FILES:-all} --porcelain --branch 2>&1 )
+  gitstatus=$( git status --porcelain --branch 2>&1 )
   if [ $? -eq 0 ]
   then
-    git_staged=0;
     git_changed=0;
     git_conflicts=0;
+    git_staged=0;
+    git_stashed=0;
     git_untracked=0;
     git_stats_string='';
-    while IFS='' read -r line || [[ -n "$line" ]]
-    do
+    while read -r line; do
       status=${line:0:2}
-      while [[ -n $status ]]
-      do
-        #echo ${status}
+      while [[ -n $status ]]; do
         case "$status" in
-          \#\#) branch_line="${line/\.\.\./^}"; break;;
-          \?\?) ((git_untracker++)); break;;
+
+  # these all need to be checked against appropriate scenarios
+
+          # double char match full loop
+          \#\#) branch_line="${line/\.\.\./^}"; break ;;
+          \?\?) ((git_untracked++)); break ;;
           U?) ((git_conflicts++)); break;;
           ?U) ((git_conflicts++)); break;;
           DD) ((git_conflicts++)); break;;
           AA) ((git_conflicts++)); break;;
-          U) ((git_conflicts++));;
-          ?M) ((git_changed++));;
-          ?D) ((git_changed++));;
-          *) ((git_staged++));;
+          # double char match 1st loop
+          M?) ((git_changed++)) ;;
+          D?) ((git_changed++)) ;;
+          ?\ ) ;;
+          # double char match 2nd loop
+          U) ((git_conflicts++)) ;;
+          \ ) ;;
+          *) ((git_staged++)) ;;
         esac
         status=${status:0:(${#status}-1)}
       done
-    done <<< ${gitstatus}
-    #echo -n ${branch_line}
+    done <<< "$gitstatus"
     IFS="^" read -ra branch_fields <<< "${branch_line/\#\# }"
     branch="${branch_fields[0]}"
-    gitbar="$(bg_color 5)$(fg_color 6)${triangle} ${branch} ${style_reset} "
-    #echo ${branch}
+    # setup stats
+    branch_status=''
+    if [[ $git_changed -ne 0 ]] ; then
+      branch_status="${branch_status}"$'\[\xe2\x9c\]\x9a'"${git_changed}"
+    fi
+    # debug line
+    #echo "${git_changed} ${git_untracked}"
+    # put all the git crap together
+    gitbar="$(bg_color 5)$(fg_color 6)${triangle} ${branch} ${branch_status} ${style_reset} "
   fi
   PS1="${gitbar}${main_prompt} $(fg_color 5)${illuminull} ${triangle}${style_reset} "
   # setup next line colors of rainbow
