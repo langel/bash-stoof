@@ -3,9 +3,11 @@
 column_count=80
 display_type=''
 byte_width=0
+ms_delay=0
 hex_table=(0 1 2 3 4 5 6 7 8 9 a b c d e f)
 
-while getopts ":bc:hs:o" opt; do
+# handle arguments
+while getopts ":bc:hm:ow:" opt; do
 	case $opt in
 		b) # binary display
 			display_type='bin'
@@ -18,10 +20,13 @@ while getopts ":bc:hs:o" opt; do
 			display_type='hex'
 			byte_width=20
 			;;
-		s) # millisecond line delay
+		m) # millisecond line delay
+			ms_delay=$((OPTARG / 1000))
 			;;
 		o) # ordinal display
 			;;
+		w) # byte width
+			byte_width=$OPTAG
 		\?)
 			echo "invalid option -$OPTARG" >&2
 			exit 1
@@ -33,6 +38,7 @@ while getopts ":bc:hs:o" opt; do
 	esac
 done
 
+# main loop
 while :
 do
 	line=''
@@ -46,4 +52,5 @@ do
 		fi
 	done
 	echo ${line}
+	sleep ${ms_delay}
 done
