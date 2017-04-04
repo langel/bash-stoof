@@ -88,9 +88,11 @@ bash_stoof() {
   then
     git_changed=0;
     git_conflicts=0;
+    git_downstream=0;
     git_staged=0;
     git_stashed=0;
     git_untracked=0;
+    git_upstream=0;
     git_stats_string='';
     while read -r line; do
       status=${line:0:2}
@@ -118,10 +120,28 @@ bash_stoof() {
         status=${status:0:(${#status}-1)}
       done
     done <<< "$gitstatus"
+    # pull the branch name
     IFS="^" read -ra branch_fields <<< "${branch_line/\#\# }"
     branch="${branch_fields[0]}"
-    # setup stats
+    # look for upstream and downstream counts
+    IFS=" " read -ra branch_bonus <<< "${branch_fields[1]}"
+    for ((i=1; i<${#branch_bonus[*]}; i++))
+    do
+      case "$( echo "${branch_bonus[i]}" )" in
+        *ahead*) 
+          git_downstream=$( echo "${branch_bonus[i+1]}" | tr -dc '0-9' );;
+        *behind*) 
+          git_upstream=$( echo "${branch_bonus[i+1]}" | tr -dc '0-9' );;
+      esac
+    done
+    # setup stats display
     branch_status=''
+    if [[ $git_downstream -ne 0 ]] ; then
+      branch_status="${branch_status}"$'\[\xe2\x86\]\x91'"${git_downstream}"
+    fi
+    if [[ $git_upstream -ne 0 ]] ; then
+      branch_status="${branch_status}"$'\[\xe2\x86\]\x93'"${git_upstream}"
+    fi
     if [[ $git_changed -ne 0 ]] ; then
       branch_status="${branch_status}"$'\[\xe2\x9c\]\x9a'"${git_changed}"
     fi
