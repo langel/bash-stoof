@@ -13,6 +13,9 @@
 * `meta-q` kill panel
 * `shift-(left or right)` move through windows
 
+.bashrc features
+* rotating rainbow prompt
+* git branch and minified status inside repos
 
 * Bootstrap a linux environment
  * modify bashrc
@@ -26,14 +29,10 @@
 * TODO
  * Interactive install script
  * Configurable install script
- * git prompt integration
  * perfect bashrc
   * color options
   * vi vs emacs
    * terminal interaction options
- * Terminal multiplexar 
-  * tmux vs screen
-   * tmux w/ screen shortcuts
  * add osx prompt option
  * create bin directory for scripts and add to path in install
  * all apt-get output piped through toilet -gay -t
