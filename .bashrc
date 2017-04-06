@@ -76,9 +76,9 @@ export PROMPT_COMMAND="bash_stoof;"
 
 bash_stoof() {
   # primary prompt display
-  style_reset="\[\033[0m\]"
-  triangle=$'\[\xe2\x96\]\xb6'
-  illuminull=$'\[\xf0\x9f\x92\]\xa1\[\xe2\x88\]\x85'
+  style_reset="\033[0m"
+  triangle=$'\xe2\x96\xb6'
+  illuminull=$'\[\xf0\x9f\x92\xa1\]\[\xe2\x88\x85\]'
   main_prompt="\[$(tput bold)\]$(fg_color 0)\t $(fg_color 1)\u$(fg_color 2)@$(fg_color 3)\h $(fg_color 4)\w\[$(tput sgr0)\]"
 
   # add git bar
@@ -120,9 +120,11 @@ bash_stoof() {
         status=${status:0:(${#status}-1)}
       done
     done <<< "$gitstatus"
+
     # pull the branch name
     IFS="^" read -ra branch_fields <<< "${branch_line/\#\# }"
     branch="${branch_fields[0]}"
+
     # look for upstream and downstream counts
     IFS=" " read -ra branch_bonus <<< "${branch_fields[1]}"
     for ((i=1; i<${#branch_bonus[*]}; i++))
@@ -134,22 +136,38 @@ bash_stoof() {
           git_upstream=$( echo "${branch_bonus[i+1]}" | tr -dc '0-9' );;
       esac
     done
+
+    # look for stash count
+    stash_file="$( git rev-parse --git-dir )/logs/refs/stash"
+    if [[ -e "${stash_file}" ]]; then
+      while IFS='' read -r wcline || [[ -n "$wcline" ]]; do
+        ((git_stashed++))
+      done < ${stash_file}
+    fi
+
     # setup stats display
     branch_status=''
     if [[ $git_downstream -ne 0 ]] ; then
-      branch_status="${branch_status}"$'\[\xe2\x86\]\x91'"${git_downstream}"
+      branch_status="${branch_status}"$'\xe2\x86\x91'"${git_downstream}"
     fi
     if [[ $git_upstream -ne 0 ]] ; then
-      branch_status="${branch_status}"$'\[\xe2\x86\]\x93'"${git_upstream}"
+      branch_status="${branch_status}"$'\xe2\x86\x93'"${git_upstream}"
+    fi
+    if [[ $git_untracked -ne 0 ]] ; then
+      branch_status="${branch_status}"$'\xe2\x80\xa6'"${git_untracked}"
     fi
     if [[ $git_changed -ne 0 ]] ; then
-      branch_status="${branch_status}"$'\[\xe2\x9c\]\x9a'"${git_changed}"
+      branch_status="${branch_status}"$'\xe2\x9c\x9a'"${git_changed}"
+    fi
+    if [[ $git_stashed -ne 0 ]] ; then
+      branch_status="${branch_status}"$'\xe2\x9a\x91'"${git_stashed}"
     fi
     # debug line
     #echo "${git_changed} ${git_untracked}"
     # put all the git crap together
-    gitbar="$(bg_color 5)$(fg_color 6)${triangle} ${branch} ${branch_status} ${style_reset} "
+    gitbar="$(bg_color 5)$(fg_color 6)${triangle} ${branch} ${branch_status}${style_reset} "
   fi
+
   PS1="${gitbar}${main_prompt} $(fg_color 5)${illuminull} ${triangle}${style_reset} "
   # setup next line colors of rainbow
 	COLOR_COUNT=5
