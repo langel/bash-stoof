@@ -212,6 +212,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# enable color for osx
+export CLICOLOR=1
+
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
