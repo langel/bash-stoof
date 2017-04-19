@@ -153,11 +153,14 @@ bash_stoof() {
     if [[ $git_upstream -ne 0 ]] ; then
       branch_status="${branch_status}"$'\xe2\x86\x93'"${git_upstream}"
     fi
+    if [[ $git_conflicts -ne 0 ]] ; then
+      branch_status="${branch_status}"$'\xe2\x8c\xa7'"${git_conflicts}"
+    fi
     if [[ $git_untracked -ne 0 ]] ; then
-      branch_status="${branch_status}"$'\xe2\x80\xa6'"${git_untracked}"
+      branch_status="${branch_status}"$'\xe2\x80\xbd'"${git_untracked}"
     fi
     if [[ $git_changed -ne 0 ]] ; then
-      branch_status="${branch_status}"$'\xe2\x9c\x9a'"${git_changed}"
+      branch_status="${branch_status}"$'\xe2\x80\xbb'"${git_changed}"
     fi
     if [[ $git_stashed -ne 0 ]] ; then
       branch_status="${branch_status}"$'\xe2\x9a\x91'"${git_stashed}"
