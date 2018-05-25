@@ -1,8 +1,9 @@
 #!/bin/bash
 
-containers="$$(docker ps -aq)"; \
-docker stop $$containers; \
-docker rm $$containers; \
-docker rmi $$(docker images -q) -f
+printf "\n### PURGING ALL DOCKER IMAGES AND CONTAINERS\n\n"
 
-echo "### ALL DOCKER IMAGES AND CONTAINERS PURGED"
+containers="$(docker ps -aq)"; \
+docker stop $containers; \
+docker rm $containers; \
+docker rmi $(docker images -q) -f
+
