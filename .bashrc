@@ -79,6 +79,7 @@ bash_stoof() {
   style_reset="\033[0m"
   triangle=$'\xe2\x96\xb6'
   illuminull=$'\[\xf0\x9f\x92\xa1\]\[\xe2\x88\x85\]'
+  emoji=$'\[\xF0\x9F\x8D\xBB\]\[\xf0\x9f\x92\xa9\]'
   main_prompt="\[$(tput bold)\]$(fg_color 0)\t $(fg_color 1)\u$(fg_color 2)@$(fg_color 3)\h $(fg_color 4)\w\[$(tput sgr0)\]"
 
   # add git bar
@@ -157,10 +158,10 @@ bash_stoof() {
       branch_status="${branch_status}"$'\xe2\x8c\xa7'"${git_conflicts}"
     fi
     if [[ $git_untracked -ne 0 ]] ; then
-      branch_status="${branch_status}"$'\xe2\x80\xbd'"${git_untracked}"
+      branch_status="${branch_status}"$'\xe2\x80\xa6'"${git_untracked}"
     fi
     if [[ $git_changed -ne 0 ]] ; then
-      branch_status="${branch_status}"$'\xe2\x80\xbb'"${git_changed}"
+      branch_status="${branch_status}"$'\xe2\x9c\x9a'"${git_changed}"
     fi
     if [[ $git_stashed -ne 0 ]] ; then
       branch_status="${branch_status}"$'\xe2\x9a\x91'"${git_stashed}"
@@ -171,7 +172,7 @@ bash_stoof() {
     gitbar="$(bg_color 5)$(fg_color 6)${triangle} ${branch} ${branch_status}${style_reset} "
   fi
 
-  PS1="${gitbar}${main_prompt} $(fg_color 5)${illuminull} ${triangle}${style_reset} "
+  PS1="${gitbar}${main_prompt} $(fg_color 5)${triangle} ${emoji} ${style_reset} "
   # setup next line colors of rainbow
 	COLOR_COUNT=5
 	COLOR_MEM=${COLOR[0]}
