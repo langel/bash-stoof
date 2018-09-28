@@ -1,19 +1,23 @@
 # bash-stoof
 
-.vimrc notes
+.vimrc features
 * :Fjson command formats json data
 * lanox is default color scheme
 * copypasta control keys (copy/cut/paste/selectAll)
 
-.tmux.conf notes
+.tmux.conf features
+* handy bottom status bar
 * `meta-(hjkl)` move across panes
 * `meta-(arrow keys)` resize pane
-* `prefix |` split pane vertically
-* `prefix -` splt pane horizontally
+* `prefix |` or `meta-|` split pane vertically
+* `prefix -` or `meta--` splt pane horizontally
 * `meta-(c or n)` new window
 * `meta-q` kill panel
 * `shift-(left or right)` move through windows
 
+.bashrc features
+* rotating rainbow prompt
+* git branch and minified status inside repos
 
 * Bootstrap a linux environment
  * modify bashrc
@@ -27,14 +31,10 @@
 * TODO
  * Interactive install script
  * Configurable install script
- * git prompt integration
  * perfect bashrc
   * color options
   * vi vs emacs
    * terminal interaction options
- * Terminal multiplexar 
-  * tmux vs screen
-   * tmux w/ screen shortcuts
  * add osx prompt option
  * create bin directory for scripts and add to path in install
  * all apt-get output piped through toilet -gay -t
