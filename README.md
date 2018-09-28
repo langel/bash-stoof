@@ -3,6 +3,7 @@
 .vimrc notes
 * :Fjson command formats json data
 * lanox is default color scheme
+* copypasta control keys (copy/cut/paste/selectAll)
 
 .tmux.conf notes
 * `meta-(hjkl)` move across panes

@@ -1,11 +1,29 @@
+" puke7's vim lurv
+
+" how you like it?
 set tabstop=3
 set shiftwidth=3
 set autoindent
 set ruler
 syntax on
+
+" colours
 set background=dark
 let g:solarized_termcolors=256
 colorscheme lanox
+
+" :e bash style tab completion
+set wildmode=longest:full,full
+
+" gvim cheats 4 copypasta
+nnoremap <C-A> ggVG
+vmap <C-c> "+yi
+vmap <C-x> "+c
+vmap <C-v> c<ESC>"+p
+imap <C-v> <ESC>"+pa
+
+" format some JSON
+command Fjson execute "%!python -m json.tool"
 
 function! CommandLineSubstitute()
 	let cl = getcmdline()
@@ -33,6 +51,3 @@ let g:command_line_substitutes = [
 " whenever we press `<enter>` on the command line:
 
 cnoremap <enter> <c-\>eCommandLineSubstitute()<enter><enter>
-
-" Let's format some JSON
-command Fjson execute "%!python -m json.tool"
