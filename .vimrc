@@ -10,7 +10,6 @@ syntax on
 " colours
 set background=dark
 let g:solarized_termcolors=256
-colorscheme lanox
 
 " :e bash style tab completion
 set wildmode=longest:full,full
