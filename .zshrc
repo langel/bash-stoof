@@ -4,7 +4,7 @@ export EDITOR=$VISUAL
 
 # enable color for osx
 export CLICOLOR=1
-export LSCOLORS=CxGxDxFxBxegedabagaced
+export LSCOLORS=CxGxDxBxFxegedabagaced
 
 # set arrays start on index 0
 setopt ksh_arrays
@@ -20,19 +20,25 @@ COLOR[5]="56"
 COLOR[6]="0"
 
 bg_color() {
-  echo "\\033[48;5;${COLOR[$1]}m"
+#  not sure if BG is available in zsh %F format
+	echo "\\033[48;5;${COLOR[$1]}m"
 }
 fg_color() {
-  echo "\\033[38;5;${COLOR[$1]}m"
+	echo "%F{${COLOR[$1]}}"
+#  old ANSI way:
+#  echo "\\033[38;5;${COLOR[$1]}m"
 }
+
+# prompt expansions explained :
+# https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html
 
 bash_stoof() {
 	# primary prompt display
-	style_reset=$"\\033[0m"
 	triangle=$'\xe2\x96\xb6'
 	illuminull=$'\[\xf0\x9f\x92\xa1\]\[\xe2\x88\x85\]'
 	emoji=$'\xF0\x9F\x8D\xBB\xf0\x9f\x92\xa9'
-	main_prompt="%B$(fg_color 0)%* $(fg_color 1)%n$(fg_color 2)@$(fg_color 3)%m $(fg_color 4)%~%b"
+	emoji_real='🍻💩'
+	main_prompt="$(fg_color 0)%D{%H:%M:%S} %B$(fg_color 1)%n$(fg_color 2)@$(fg_color 3)%m $(fg_color 4)%~%b"
   
 	PROMPT="${gitbar}${main_prompt} $(fg_color 5)${triangle} ${emoji} %f"
   # setup next line colors of rainbow
