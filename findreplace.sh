@@ -10,5 +10,5 @@ then
 else
 	STRING="s/${NEEDLE}/${REPLACEMENT}/g"
 	echo $STRING
-	find . -type f -exec sed -i $STRING {} +
+	find . \( ! -regex '.*/\..*' \) -type f -exec sed -i $STRING {} +
 fi
