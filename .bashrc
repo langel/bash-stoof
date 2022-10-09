@@ -39,6 +39,13 @@ esac
 
 export TERM=xterm-256color
 
+
+# setup custom directory colors with :
+# dircolors -p > ~/.dircolors
+[ -e ~/.dircolors ] && eval $(dircolors -b ~/.dircolors) || 
+	eval $(dircolors -b)
+
+
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
