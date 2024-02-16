@@ -5,13 +5,14 @@ set tabstop=3
 set shiftwidth=3
 set autoindent
 set ruler
+set ff=unix
 
 " colours
 syntax enable
 set background=dark
 let g:gruvbox_termcolors=256
 let g:solarized_termcolors=256
-colorscheme solarized
+colorscheme gruvblast
 
 " :e bash style tab completion
 set wildmode=longest:full,full

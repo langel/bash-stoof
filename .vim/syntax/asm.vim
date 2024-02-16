@@ -26,7 +26,7 @@ syn keyword dasm_defines
 syn keyword dasm_directives
  \ org rorg seg rend align
 syn keyword dasm_generates
- \ org repeat repend
+ \ repeat repend
 syn keyword dasm_includes
  \ incbin incdir include
 syn keyword dasm_macros
@@ -48,7 +48,7 @@ hi def link dasm_label      Label
 hi def link dasm_sublabel   Label
 hi def link dasm_comment    Comment
 hi def link dasm_controls   Structure
-hi def link dasm_conditions PreCondit
+hi def link dasm_conditions Conditional
 hi def link dasm_defines    Define
 hi def link dasm_directives PreProc
 hi def link dasm_generates  Function
