@@ -2,7 +2,7 @@
 
 .vimrc features
 * :Fjson command formats json data
-* lanox is default color scheme
+* solarized is default color scheme
 * copypasta control keys (copy/cut/paste/selectAll)
 
 .tmux.conf features
@@ -33,8 +33,6 @@
  * Configurable install script
  * perfect bashrc
   * color options
-  * vi vs emacs
-   * terminal interaction options
  * add osx prompt option
  * create bin directory for scripts and add to path in install
  * all apt-get output piped through toilet -gay -t
