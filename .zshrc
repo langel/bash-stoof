@@ -55,3 +55,5 @@ bash_stoof() {
 
 export PROMPT_COMMAND="bash_stoof;"
 precmd() { eval "$PROMPT_COMMAND" }
+
+alias here='open .'
