@@ -9,10 +9,28 @@ set ff=unix
 
 " colours
 syntax enable
-set background=dark
-let g:gruvbox_termcolors=256
-let g:solarized_termcolors=256
-colorscheme gruvblast
+"set background=dark
+"let g:gruvbox_termcolors=256
+"let g:solarized_termcolors=256
+set termguicolors
+let g:srcery_italic = 0
+let g:srcery_inverse = 0
+let g:srcery_red = '#FBB829'     " old yellow
+let g:srcery_yellow = '#EF3FF7'  " old red
+let g:srcery_black = '#220327'
+
+function! s:srcery_overrides() abort
+  highlight! ErrorMsg guifg=#121110 guibg=#FBB829 ctermfg=0 ctermbg=11 gui=bold cterm=bold
+  highlight! WarningMsg guifg=#121110 guibg=#FBB829 ctermfg=0 ctermbg=11 gui=bold cterm=bold
+endfunction
+
+augroup MySrceryOverrides
+  autocmd!
+  autocmd ColorScheme srcery call s:srcery_overrides()
+augroup END
+
+colorscheme srcery
+call s:srcery_overrides()
 
 " :e bash style tab completion
 set wildmode=longest:full,full
